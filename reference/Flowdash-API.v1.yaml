@@ -13,14 +13,14 @@ servers:
   - url: 'https://app.flowdash.com/api'
     description: Production
 paths:
-  /v1/tasks:
+  '/v1/tasks':
     get:
       summary: Get tasks for a workflow
       operationId: get-v1-tasks
       description: Get workflow tasks.
       parameters:
         - schema:
-            type: string
+          type: string
           in: header
           name: Content-Type
           description: application/json
@@ -38,13 +38,13 @@ paths:
       description: Post new workflow task.
       parameters:
         - schema:
-            type: string
+          type: string
           in: path
           required: true
           name: workflow_id
           description: The workflow ID
         - schema:
-            type: string
+          type: string
           in: header
           name: Content-Type
           description: application/json
