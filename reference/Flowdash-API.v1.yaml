@@ -1,0 +1,198 @@
+openapi: 3.0.0
+tags:
+  - name: Tasks
+info:
+  title: Flowdash API
+  version: '1.0'
+  termsOfService: 'https://flowdash.com/terms'
+  description: Welcome to the Flowdash API documentation.
+  contact:
+    name: Developer Relations
+    email: support@flowdash.com
+servers:
+  - url: 'https://app.flowdash.com/api'
+    description: Production
+paths:
+  /v1/tasks:
+    get:
+      summary: Get tasks for a workflow
+      operationId: get-v1-tasks
+      description: Get workflow tasks.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      responses:
+        '200':
+          $ref: '#/components/responses/Task-List'
+      tags:
+        - Tasks
+      security:
+        - Authorization: []
+  '/v1/workflows/{workflow_id}/tasks':
+    post:
+      summary: Post a new task for a workflow
+      operationId: post-v1-tasks
+      description: Post new workflow task.
+      parameters:
+        - schema:
+            type: string
+          in: path
+          required: true
+          name: workflow_id
+          description: The workflow ID
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      responses:
+        '200':
+          $ref: '#/components/responses/Task-Object'
+      tags:
+        - Tasks
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                Company ID:
+                  type: string
+                  minLength: 1
+                Company Name:
+                  type: string
+                  minLength: 1
+                Number of Employees:
+                  type: number
+                Contract Value:
+                  type: number
+                Expected Close Date:
+                  type: string
+                  minLength: 1
+                International?:
+                  type: boolean
+                Stage:
+                  type: string
+                  minLength: 1
+                Assigned To:
+                  type: string
+                  minLength: 1
+              required:
+                - Company ID
+                - Company Name
+                - Number of Employees
+                - Contract Value
+                - Expected Close Date
+                - International?
+                - Stage
+                - Assigned To
+            examples: {}
+components:
+  schemas:
+    Task:
+      title: Task
+      type: object
+      description: The representation of a task in Flowdash
+      x-examples:
+        Example:
+          Stage: In Progress
+          Assigned To: null
+          Task URL: 'https://app.flowdash.com/workflows/2ylSaZ/tasks/ooCwnZ'
+          Company ID: 42
+          Company Name: Acme Corp
+          Number of Employees: 10
+          Contract Value: 10000
+          Expected Close Date: '2020-01-31'
+          International?: false
+      properties:
+        Stage:
+          type: string
+          description: stage
+        Assigned To:
+          type: string
+          description: assigned to
+        Task URL:
+          type: string
+          description: task url
+        Company ID:
+          type: integer
+          description: company id (custom)
+        Company Name:
+          type: string
+          description: company name (custom)
+        Number of Employees:
+          type: integer
+          description: number of employees (custom)
+        Contract Value:
+          type: integer
+          description: contract value (custom)
+        Expected Close Date:
+          type: string
+          description: expected close date (custom)
+        International?:
+          type: boolean
+          description: international (custom)
+      readOnly: true
+      x-tags:
+        - Tasks
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: Bearer
+      description: The access token
+  responses:
+    Task-Object:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Task'
+          examples:
+            Example:
+              value:
+                Stage: In Progress
+                Assigned To: bob
+                Task URL: 'https://app.flowdash.com/workflows/2ylSaZ/tasks/ooCwnZ'
+                Company ID: 42
+                Company Name: Acme Corp
+                Number of Employees: 10
+                Contract Value: 10000
+                Expected Close Date: '2020-01-31'
+                International?: false
+    Task-List:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Task'
+          examples:
+            Example:
+              value:
+                - Stage: In Progress
+                  Assigned To: bob
+                  Task URL: 'https://app.flowdash.com/workflows/2ylSaZ/tasks/ooCwnZ'
+                  Company ID: 42
+                  Company Name: Acme Corp
+                  Number of Employees: 10
+                  Contract Value: 10000
+                  Expected Close Date: '2020-01-31'
+                  International?: false
+                - Stage: Completed
+                  Assigned To: lisa
+                  Task URL: 'https://app.flowdash.com/workflows/2ylSaZ/tasks/ooCwnZ'
+                  Company ID: 49
+                  Company Name: Bread Ltd
+                  Number of Employees: 19
+                  Contract Value: 20000
+                  Expected Close Date: '2020-02-13'
+                  International?: false
+security:
+  - Authorization: []
+
