@@ -13,17 +13,18 @@ servers:
   - url: 'https://app.flowdash.com/api'
     description: Production
 paths:
-  '/v1/tasks':
+  /v1/tasks:
     get:
       summary: Get tasks for a workflow
-      operationId: get-v1-tasks
+      operationId: getTasks
       description: Get workflow tasks.
       parameters:
-        - schema:
-          type: string
+        - name: Content-Type
           in: header
-          name: Content-Type
           description: application/json
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           $ref: '#/components/responses/Task-List'
@@ -31,23 +32,24 @@ paths:
         - Tasks
       security:
         - Authorization: []
-  '/v1/workflows/{workflow_id}/tasks':
+  /v1/workflows/{workflow_id}/tasks:
     post:
       summary: Post a new task for a workflow
       operationId: post-v1-tasks
       description: Post new workflow task.
       parameters:
-        - schema:
-          type: string
-          in: path
-          required: true
-          name: workflow_id
+        - name: workflow_id
           description: The workflow ID
-        - schema:
-          type: string
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: Content-Type
           in: header
-          name: Content-Type
           description: application/json
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           $ref: '#/components/responses/Task-Object'
