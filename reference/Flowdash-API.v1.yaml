@@ -31,7 +31,7 @@ paths:
       tags:
         - Tasks
       security:
-        - Authorization: []
+        - []
   /v1/workflows/{workflow_id}/tasks:
     post:
       summary: Post a new task for a workflow
@@ -142,11 +142,10 @@ components:
       readOnly: true
       x-tags:
         - Tasks
-  securitySchemes:
-    Authorization:
+  securitySchemas:
+    bearer:
       type: http
-      scheme: Bearer
-      description: The access token
+      scheme: bearer
   responses:
     Task-Object:
       description: Example response
