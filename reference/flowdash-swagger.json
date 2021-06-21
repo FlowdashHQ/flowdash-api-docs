@@ -129,14 +129,7 @@
                     }
                   },
                   "required": [
-                    "Company ID",
-                    "Company Name",
-                    "Number of Employees",
-                    "Contract Value",
-                    "Expected Close Date",
-                    "International?",
-                    "Stage",
-                    "Assigned To"
+
                   ]
                 },
                 "examples": {
